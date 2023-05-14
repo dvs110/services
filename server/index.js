@@ -188,7 +188,7 @@ app.post('/carrers/signup-worker', async (req, res) => {
                 { ...req.body, password: hash }
             );
             try {
-                console.log(newworker.photo);
+                console.log(newworker);
 
 
                 const savedworker = await newworker.save();
