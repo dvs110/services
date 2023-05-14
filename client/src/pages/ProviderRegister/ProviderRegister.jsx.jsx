@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Footer, Header } from '../../components'
 // import data from '../data'
 const ProviderRegister = () => {
+  const [photo, setphoto] = useState("");
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -27,8 +28,20 @@ const ProviderRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8080/carrers/signup-worker";
-      const res = await axios.post(url, data);
+
+      const d = new FormData();
+      d.append("file", photo);
+      d.append("upload_preset", "upload")
+      d.append("cloud_name", "dwc7aty0x")
+      const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/dwc7aty0x/image/upload", d)
+      console.log(uploadRes.data);
+      const { url } = uploadRes.data;
+      let dat = {
+        ...data,
+        photo: url
+      }
+
+      const res = await axios.post("http://localhost:8080/carrers/signup-worker", dat);
       if (res.data === 1)
         navigate('/provider/login');
       else (res.data === 0)
@@ -147,7 +160,7 @@ const ProviderRegister = () => {
                   onChange={onChangeHandle}
                   value={data.amount} placeholder='Amount' />
               </div>
-              <input type="file" id="img" name="img" accept="image/*" className='rounded-lg  text-black bg-[#edf5f3] mx-[5px] outline-none border-none m-2 w-60 md:w-80 md:p-3.5 p-2 text-[14px]' />
+              <input type="file" id="img" name="img" onChange={(e) => setphoto(e.target.files[0])} accept="image/*" className='rounded-lg  text-black bg-[#edf5f3] mx-[5px] outline-none border-none m-2 w-60 md:w-80 md:p-3.5 p-2 text-[14px]' />
 
 
 

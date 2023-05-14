@@ -169,7 +169,7 @@ const workerSchema = new mongoose.Schema({
     state: { type: String },
     city: { type: String },
     amount: { type: Number },
-    // photo: { type: String },
+    photo: { type: String },
 
 });
 const Worker = mongoose.model('Worker', workerSchema);
@@ -188,6 +188,8 @@ app.post('/carrers/signup-worker', async (req, res) => {
                 { ...req.body, password: hash }
             );
             try {
+                console.log(newworker.photo);
+
 
                 const savedworker = await newworker.save();
                 res.status(200).json(1)
