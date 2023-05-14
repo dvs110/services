@@ -52,8 +52,10 @@ const Vendor = () => {
               name={val.name}
               address={val.address}
               imgUrl={val.imgUrl}
+              // imgUrl={val.photo}
               title={val.title}
               id={`vendor${index}`}
+              status={val.status}
             />
           )
         })}

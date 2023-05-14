@@ -89,30 +89,35 @@ const vendorData = [
         address: "Delhi",
         imgUrl: v1,
         title: 'loremifuoeifwoiefawif jewfhrwjehkjqehqjh',
+        status: true,
     },
     {
         name: 'Aman ',
         address: "uttarakhand",
         imgUrl: v2,
         title: 'loremifuoeifwoiefawif ',
+        status: true,
     },
     {
         name: 'Gaurav',
         address: "Rishikesh",
         imgUrl: v3,
         title: 'loremifuoeifwoiefawif ',
+        status: true,
     },
     {
         name: 'Ajay',
         address: "Dehradun",
         imgUrl: v4,
         title: 'loremifuoeifwoiefawif dfjsh dfhsjdluy fdjshfkjdfkjdkj dfjdk ',
+        status: true,
     },
     {
         name: 'Sohan',
         address: "Mumbai",
         imgUrl: v4,
         title: 'loremifuoeifwoiefawif ',
+        status: true,
     },
 ]
 

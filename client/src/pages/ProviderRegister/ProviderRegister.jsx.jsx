@@ -119,7 +119,7 @@ const ProviderRegister = () => {
                   value={data.city} placeholder='City' />
 
                 {/* className="leading-5 py-3 px-2 border-none outline-none rounded-md  my-3 border-black" */}
-                <select className='rounded-lg  text-black bg-[#edf5f3] mx-[5px] outline-none border-none m-2 w-60 md:w-80 md:p-3.5 p-2 text-[14px]' name="profession" id="profession" placeholder='Profession' onChange={onChangeHandle} value={data.work} >
+                <select className='rounded-lg  text-black bg-[#edf5f3] mx-[5px] outline-none border-none m-2 w-60 md:w-80 md:p-3.5 p-2 text-[14px]' name="work" id="profession" placeholder='Profession' onChange={onChangeHandle} value={data.work} >
                   <optgroup label="Automotive">
                     <option value="Cab Service"> Cab Services </option>
                     <option value="Car Caring and Servicing"> Car  care  and Servicing</option>

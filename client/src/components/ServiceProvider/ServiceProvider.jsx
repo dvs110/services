@@ -45,7 +45,7 @@ const ServiceProvider = () => {
                                     key={index}
                                     name={`${val.firstName} ${val.lastName}`}
                                     location={`${val.city}, ${val.state}`}
-                                    imgUrl={val.imgUrl}
+                                    imgUrl={val.photo}
                                     title={val.title}
                                     email={val.email}
                                     phone={val.phone}
@@ -53,6 +53,7 @@ const ServiceProvider = () => {
                                     work={val.work}
                                     price={val.amount}
                                     age={val.age}
+                                    status={val.status}
                                 />
                             )
                         })

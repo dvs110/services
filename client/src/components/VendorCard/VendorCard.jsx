@@ -3,6 +3,8 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa'
 
 const VendorCard = (props) => {
+  console.log("Helloooooooooo", props);
+
   return (
 
     <div className='md:px-12 px-2 md:py-10 py-5'>

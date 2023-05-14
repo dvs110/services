@@ -188,7 +188,7 @@ app.post('/carrers/signup-worker', async (req, res) => {
                 { ...req.body, password: hash }
             );
             try {
-                console.log(newworker);
+                // console.log(newworker);
 
 
                 const savedworker = await newworker.save();
@@ -263,6 +263,7 @@ app.put("/carrers/update-worker", async (req, res) => {
         }
         else {
             const workerflight = await Worker.findByIdAndUpdate(worker._id, { $set: { ...req.body } }, { new: true });
+            console.log(workerflight);
             res.status(200).json(workerflight)  //successfully updated
         }
     } catch (err) {
@@ -293,7 +294,7 @@ app.put("/book-worker", async (req, res) => {
     console.log(req.body);
     const worker = await Worker.findOne({ email: req.body.email })
     const workerflight = await Worker.findByIdAndUpdate(worker._id, { $set: { status: true } }, { new: true });
-
+    console.log(workerflight);
 
     // for Worker
     var mailOptions = {
