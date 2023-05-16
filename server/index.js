@@ -170,6 +170,13 @@ const workerSchema = new mongoose.Schema({
     city: { type: String },
     amount: { type: Number },
     photo: { type: String },
+    name: { type: String },
+    emaily: { type: String },
+    address: { type: String },
+    phony: { type: Number },
+    time: { type: String },
+    emailcustomer: { type: String }
+
 
 });
 const Worker = mongoose.model('Worker', workerSchema);
@@ -294,7 +301,19 @@ app.put("/book-worker", async (req, res) => {
     console.log(req.body);
     const worker = await Worker.findOne({ email: req.body.email })
     const workerflight = await Worker.findByIdAndUpdate(worker._id, { $set: { status: true } }, { new: true });
-    console.log(workerflight);
+
+
+
+    await Worker.findByIdAndUpdate(worker._id, { $set: { name: req.body.name } }, { new: true });
+    await Worker.findByIdAndUpdate(worker._id, { $set: { emaily: req.body.email } }, { new: true });
+    await Worker.findByIdAndUpdate(worker._id, { $set: { address: req.body.address } }, { new: true });
+    await Worker.findByIdAndUpdate(worker._id, { $set: { time: req.body.time } }, { new: true });
+    await Worker.findByIdAndUpdate(worker._id, { $set: { phony: req.body.phone } }, { new: true });
+    const workerflight1 = await Worker.findByIdAndUpdate(worker._id, { $set: { emailcustomer: req.body.emailcustomer } }, { new: true });
+
+
+
+    console.log(workerflight1);
 
     // for Worker
     var mailOptions = {
