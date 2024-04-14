@@ -1,8 +1,8 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios"
+import { loadStripe } from '@stripe/stripe-js';
 const ConfirmPage = () => {
-
      const navigation = useNavigate();
      const date = new Date();
      const day = date.getDate();
@@ -23,17 +23,20 @@ const ConfirmPage = () => {
                email: location.state.pdata.email,
                emailcustomer: location.state.email,
           }
-          console.log(data);
-          navigation("/")
-          console.log(location.state.pdata.email);
+          // console.log(data);
+          // navigation("/")
+          // console.log(location.state.pdata.price);
+          const stripe_data = {
+               p: location.state.pdata.price,
+               w: location.state.pdata.work
+          }
+          let responsy = await axios.post("http://localhost:8080/carrers/create-checkout-session", stripe_data)
+          console.log(responsy.data.url);
+          if (responsy.data.url) {
+               window.location.href = responsy.data.url
+          }
           let res = await axios.put("http://localhost:8080/carrers/book-worker", data)
-          // let responsy = await axios.post(`http://localhost:8080/create-checkout-session`, {
-          //      p: location.state.pdata.price,
-          //      w: location.state.pdata.work
-          // })
-          // if (responsy.data.url) {
-          //      window.location.href = responsy.data.url
-          // }
+
           navigation("/")
 
      }

@@ -17,6 +17,11 @@ const Login = () => {
       const res = await axios.post(url, data);
 
       if (res.data === 1) {
+        const datar = {
+          password: data.password,
+          email: data.email,
+        }
+        localStorage.setItem('myData', JSON.stringify(datar));
         window.location = "/";
       }
       else if (res.data === 0) {

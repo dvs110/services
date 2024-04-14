@@ -22,8 +22,13 @@ const Register = () => {
       const url = "http://localhost:8080/signup-user";
       const res = await axios.post(url, data);
       // console.log(res);
+      const datar = {
+        password: data.password,
+        email: data.email,
+      }
+      localStorage.setItem('myData', JSON.stringify(datar));
       if (res.data != 0) {
-        navigate('/login');
+        navigate('/');
       }
       else if (res.data == 0) {
         setError("User already exist")
