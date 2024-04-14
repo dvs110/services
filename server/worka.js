@@ -7,8 +7,8 @@ const cors = require('cors');
 router.use(express.urlencoded({ extended: false }))
 router.use(express.json());
 router.use(cors());
-// const Stripe = require('stripe')
-// const stripe = Stripe(process.env.STRIPE_KEY)
+const Stripe = require('stripe')
+const stripe = Stripe(process.env.STRIPE_KEY)
 
 
 ///------worker schema
@@ -182,7 +182,7 @@ router.post("/findbyservice", async (req, res) => {
 })
 
 router.put("/book-worker", async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const worker = await Worker.findOne({ email: req.body.email })
     const workerflight = await Worker.findByIdAndUpdate(worker._id, { $set: { status: true } }, { new: true });
 
@@ -195,43 +195,74 @@ router.put("/book-worker", async (req, res) => {
 
 
 
-    console.log(workerflight1);
+    // console.log(workerflight1);
 
     // for Worker
-    var mailOptions = {
-        from: process.env.EMAIL,
-        to: req.body.email,//email to be sended
-        subject: "Regarding Booking",
-        html: `<div className="outer-flight-div" style='max-width: 100vw;'><div className="flight-section" style='width:60%;background-color: blue;margin:auto;@media screen and (max-width:640px) {.flight-section{width:80%;}}'><h1 style='text-align: center;margin-top: 2rem;padding-top:4rem;@media screen and (max-width:640px) {h1{text-align: center;margin-top: 2rem;padding-top:3rem;}}'>Confirmed Booking</h1><p style='margin-top: 2rem;text-align: center;font-size: 1.2rem;font-weight: 600;@media screen and (max-width:640px) { .flight-section p{margin:1.2rem}}'>Customer Name: <span style='color:#0b1560;'>${workerflight1.name}</span></p><div className="flight-time" style='padding: 2rem 0;margin:auto; @media screen and (max-width:640px) {.flight-time{flex-direction: column; }}'>
-        <div className="from"></div></div><div className="flight-footer-section" style='padding-bottom: 2rem;'><p>Time: ${workerflight1.time}</p><p>Phone Number:${workerflight1.phony}</p><p>Customer Address: ${workerflight1.address}</p></div></div></div></div>`  // html body
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    });
+    // var mailOptions = {
+    //     from: process.env.EMAIL,
+    //     to: req.body.email,//email to be sended
+    //     subject: "Regarding Booking",
+    //     html: `<div className="outer-flight-div" style='max-width: 100vw;'><div className="flight-section" style='width:60%;background-color: blue;margin:auto;@media screen and (max-width:640px) {.flight-section{width:80%;}}'><h1 style='text-align: center;margin-top: 2rem;padding-top:4rem;@media screen and (max-width:640px) {h1{text-align: center;margin-top: 2rem;padding-top:3rem;}}'>Confirmed Booking</h1><p style='margin-top: 2rem;text-align: center;font-size: 1.2rem;font-weight: 600;@media screen and (max-width:640px) { .flight-section p{margin:1.2rem}}'>Customer Name: <span style='color:#0b1560;'>${workerflight1.name}</span></p><div className="flight-time" style='padding: 2rem 0;margin:auto; @media screen and (max-width:640px) {.flight-time{flex-direction: column; }}'>
+    //     <div className="from"></div></div><div className="flight-footer-section" style='padding-bottom: 2rem;'><p>Time: ${workerflight1.time}</p><p>Phone Number:${workerflight1.phony}</p><p>Customer Address: ${workerflight1.address}</p></div></div></div></div>`  // html body
+    // };
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //     if (error) {
+    //         return console.log(error);
+    //     }
+    //     console.log('Message sent: %s', info.messageId);
+    //     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    // });
 
     //for Customer
 
-    var mailOptions1 = {
-        from: process.env.EMAIL,
-        to: req.body.emailcustomer,//email to be sended
-        subject: "Regarding Booking",
-        html: `<div><h1 style='font-weight:bold'>Your Booking is confirmed</h1></div>`  // html body
-    };
-    transporter.sendMail(mailOptions1, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    });
+    // var mailOptions1 = {
+    //     from: process.env.EMAIL,
+    //     to: req.body.emailcustomer,//email to be sended
+    //     subject: "Regarding Booking",
+    //     html: `<div><h1 style='font-weight:bold'>Your Booking is confirmed</h1></div>`  // html body
+    // };
+    // transporter.sendMail(mailOptions1, (error, info) => {
+    //     if (error) {
+    //         return console.log(error);
+    //     }
+    //     console.log('Message sent: %s', info.messageId);
+    //     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    // });
 
 
 
 })
+router.post("/create-checkout-session", async (req, res) => {
+    console.log(req.body);
+    const { stripe_data } = req.body;
+    // console.log(stripe_data);
+    console.log(50);
+
+    const lineItems = [{
+        price_data: {
+            currency: "inr",
+            product_data: {
+                name: req.body.w,
+            },
+            unit_amount: req.body.p * 100,
+        },
+        quantity: 1
+    }];
+
+
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        mode: "payment",
+        success_url: "http://127.0.0.1:5173",
+        cancel_url: "http://127.0.0.1:5173/fail",
+    });
+    console.log(session.url);
+    res.json({ url: session.url })
+
+})
+
+
 router.put("/cancelbooking-worker/:id", async (req, res) => {
 
     const workerflight = await Worker.findByIdAndUpdate(req.params.id, { $set: { status: false } }, { new: true });

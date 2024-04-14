@@ -6,6 +6,7 @@ const user = require('./user')
 const worker = require('./worka')
 app.use('/', user)
 app.use('/carrers', worker)
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const connect = async () => {
     try {
@@ -15,6 +16,9 @@ const connect = async () => {
         throw error;
     }
 };
+
+
+
 mongoose.connection.on('disconnected', () => { //if mongodb got disconnected
     console.log("mongodb disconnected");
 });
