@@ -2,17 +2,27 @@ import React, { useState } from 'react';
 import './feedback.css';
 import StarRating from './StarRating';
 const Feedback = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+
     const [feedback, setFeedback] = useState('');
     const [rating, setRating] = useState(0);
+    const [data, setData] = useState({ firstname: "", lastname: "", work: "" });
+    const onChangeHandle = (e) => {
+        setData({ ...data, [e.target.name]: [e.target.value] })
 
-    const handleSubmit = (e) => {
+    }
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Name:', name);
-        console.log('Email:', email);
         console.log('Feedback:', feedback);
         // You can add code here to send the feedback to a server, etc.
+        e.preventDefault();
+        try {
+            const url = "http://localhost:8080/carrers/update-worker-byname";
+            const res = await axios.put(url, data);
+            console.log(res.data);
+        }
+        catch {
+
+        }
     };
 
     return (
@@ -20,22 +30,35 @@ const Feedback = () => {
             <form className="feedback-form" onSubmit={handleSubmit}>
                 <h2>Feedback Form</h2>
                 <div className="form-group">
-                    <label htmlFor="name">Service Provider Name:</label>
+                    <label htmlFor="firstname">Service Provider First Name:</label>
                     <input
                         type="text"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        id="firstname"
+                        name='firstname'
+                        value={data.firstname}
+                        onChange={onChangeHandle}
                         required
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="email">Service:</label>
+                    <label htmlFor="lastname">Service Provider Last Name:</label>
                     <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="text"
+                        id="lastname"
+                        name='lastname'
+                        value={data.lastname}
+                        onChange={onChangeHandle}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="work">Service:</label>
+                    <input
+                        type="text"
+                        id="work"
+                        name='work'
+                        value={data.work}
+                        onChange={onChangeHandle}
                         required
                     />
                 </div>
@@ -52,7 +75,7 @@ const Feedback = () => {
                     <label htmlFor="rating">Rate your experience:</label>
                     <StarRating totalStars={5} onRate={setRating} />
                 </div>
-                <div className='btn-div'>
+                <div className='btn-div' onClick={handleSubmit}>
                     {/* <button type="submit" className="form-btn100">Submit</button>
                      */}
                     Submit

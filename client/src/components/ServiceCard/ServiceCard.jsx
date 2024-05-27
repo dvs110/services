@@ -47,7 +47,7 @@ const ServiceCard = (props) => {
           <p className='text-sm px-5 py-1 font-textFont font-extrabold   break-words text-[#767676]'>{props.title}</p>
           <div className='flex justify-between  h-[100px] items-center'>
             <div className="first">
-              <p className='text-xl px-5 py-3 text-center font-textFont font-extrabold   break-words text-bannerText'>${props.price}</p>
+              <p className='text-xl px-5 py-3 text-center font-textFont font-extrabold   break-words text-bannerText'>₹{props.price}</p>
               <span className='self-center px-3 rounded-md py-1 text-white bg-bannerText changeColor'>{props.rating} <AiFillStar className=' ml-1 inline text-btnColor' /></span>
             </div>
             <div className="second">

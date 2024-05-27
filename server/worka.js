@@ -35,7 +35,7 @@ const workerSchema = new mongoose.Schema({
     status: { type: Boolean, default: false },// available
     phone: { type: Number },
     work: { type: String },
-    rating: { type: String, default: "5" },
+    rating: { type: String, default: "0" },
     age: { type: Number },
     state: { type: String },
     city: { type: String },
@@ -149,7 +149,24 @@ router.put("/update-worker", async (req, res) => {
     }
 
 })
+router.put("/update-worker-byname", async (req, res) => {
+    try {
+        console.log(req.body);
+        const worker = await Worker.findOne({ firstName: req.body.firstName, lastName: req.body.lastName, work: req.body.work });
 
+        if (worker == null) {
+            res.status(200).json(0)  //worker not found
+        }
+        else {
+            const workerflight = await Worker.findByIdAndUpdate(worker._id, { $set: { ...req.body } }, { new: true });
+            console.log(workerflight);
+            res.status(200).json(1)  //successfully updated
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+})
 router.put("/update-password", async (req, res) => {
     try {
         const worker = await Worker.findOne({ email: req.body.email })
