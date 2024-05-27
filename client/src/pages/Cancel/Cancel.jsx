@@ -2,6 +2,7 @@ import React from 'react'
 import { Footer, Header } from '../../components'
 
 const Cancel = () => {
+
     return (
         <div style={{ color: "red" }}>
             <Header />

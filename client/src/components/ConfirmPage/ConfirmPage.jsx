@@ -27,6 +27,7 @@ const ConfirmPage = () => {
           // navigation("/")
           // console.log(location.state.pdata.price);
           const stripe_data = {
+               name: location.state.pdata.pname,
                p: location.state.pdata.price,
                w: location.state.pdata.work
           }

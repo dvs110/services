@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import SearchPage from './pages/SearchPage/SearchPage'
 import Cancel from './pages/Cancel/Cancel'
 import Success from './pages/Success/Success'
+import Feedback from './pages/Feedback/Feedback'
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/careers' element={<ProviderRegister />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/service' element={<ServiceProvider />} />
+          <Route path='/feedback' element={<Feedback />} />
           <Route path='/booking' element={<BookingPage />} />
           <Route path='/custbookingdetail' element={<CustomerBookingDetail />} />
           <Route path='/confirm' element={<ConfirmPage />} />

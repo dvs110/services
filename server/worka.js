@@ -237,6 +237,7 @@ router.post("/create-checkout-session", async (req, res) => {
     const { stripe_data } = req.body;
     // console.log(stripe_data);
     console.log(50);
+    let q = ((((req.body.p + 50) * 100) + ((req.body.p * 100) * 18) / 100));
 
     const lineItems = [{
         price_data: {
@@ -244,7 +245,7 @@ router.post("/create-checkout-session", async (req, res) => {
             product_data: {
                 name: req.body.w,
             },
-            unit_amount: req.body.p * 100,
+            unit_amount: q,
         },
         quantity: 1
     }];
@@ -254,7 +255,8 @@ router.post("/create-checkout-session", async (req, res) => {
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: "http://localhost:5173/success",
+        // success_url: "http://localhost:5173/success",
+        success_url: "http://localhost:5173/success?product=" + encodeURIComponent(req.body.w) + "&amount=" + (req.body.p * 100) + "&name=" + encodeURIComponent(req.body.name),
         cancel_url: "http://localhost:5173/fail",
     });
     console.log(session.url);

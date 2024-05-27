@@ -1,0 +1,52 @@
+/* BillingPage.css */
+.billing-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.billing-container {
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+.billing-heading {
+    margin-top: 0;
+    text-align: center;
+}
+
+.billing-input {
+    margin-bottom: 20px;
+}
+
+.subtotal-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.billing-summary {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #ced4da;
+    padding-top: 10px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total {
+    font-weight: bold;
+    color: #28a745;
+}

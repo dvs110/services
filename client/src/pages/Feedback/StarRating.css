@@ -1,0 +1,14 @@
+.star-rating {
+    font-size: 24px;
+    color: #ccc;
+    /* Set the default color of the stars */
+}
+
+.star {
+    cursor: pointer;
+}
+
+.star.selected {
+    color: #ffc107;
+    /* Set the color of the selected stars */
+}
