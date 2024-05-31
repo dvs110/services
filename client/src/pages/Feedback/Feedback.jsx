@@ -1,24 +1,36 @@
 import React, { useState } from 'react';
 import './feedback.css';
 import StarRating from './StarRating';
+import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 const Feedback = () => {
 
     const [feedback, setFeedback] = useState('');
     const [rating, setRating] = useState(0);
-    const [data, setData] = useState({ firstname: "", lastname: "", work: "" });
+    const [data, setData] = useState({
+        firstname: "",
+        lastname: "",
+        work: ""
+    });
+    const navigate = useNavigate();
     const onChangeHandle = (e) => {
-        setData({ ...data, [e.target.name]: [e.target.value] })
+        setData({ ...data, [e.target.name]: e.target.value })
 
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Feedback:', feedback);
+        // console.log('Feedback:', feedback);
         // You can add code here to send the feedback to a server, etc.
-        e.preventDefault();
+        const feedbackData = {
+            ...data,
+            rating: rating.toString()
+        };
         try {
+            console.log(data);
             const url = "http://localhost:8080/carrers/update-worker-byname";
-            const res = await axios.put(url, data);
+            const res = await axios.post(url, feedbackData);
             console.log(res.data);
+            navigate('/');
         }
         catch {
 

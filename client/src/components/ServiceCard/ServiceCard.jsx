@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa'
 import { AiFillStar } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
 import { providerData } from '../data';
+
 const ServiceCard = (props) => {
   const navigate = useNavigate();
+  const [data, setData] = useState(0)
+
+
   const bookingHandle = () => {
-    console.log(props);
+    console.log(props.rating);
     navigate('/booking', {
       state: {
-        // myData:{providerData},
-        // display:"hidden",
         name: props.name,
         work: props.work,
         location: props.location,
@@ -21,7 +23,15 @@ const ServiceCard = (props) => {
       }
     })
   }
+  const calculateAverageRating = (ratings) => {
+    if (ratings.length === 0) return 0;
+    const total = ratings.reduce((sum, rating) => sum + parseFloat(rating), 0);
+    const average = total / ratings.length;
 
+    return average.toFixed(1); // Round to 1 decimal place
+  };
+
+  const averageRating = calculateAverageRating(props.rating);
   return (
 
     <div className='md:px-12 px-2 md:py-10 py-5'>
@@ -48,7 +58,7 @@ const ServiceCard = (props) => {
           <div className='flex justify-between  h-[100px] items-center'>
             <div className="first">
               <p className='text-xl px-5 py-3 text-center font-textFont font-extrabold   break-words text-bannerText'>₹{props.price}</p>
-              <span className='self-center px-3 rounded-md py-1 text-white bg-bannerText changeColor'>{props.rating} <AiFillStar className=' ml-1 inline text-btnColor' /></span>
+              <span className='self-center px-3 rounded-md py-1 text-white bg-bannerText changeColor'>{averageRating} <AiFillStar className=' ml-1 inline text-btnColor' /></span>
             </div>
             <div className="second">
               <p className='text-md px-5 py-3 font-textFont font-extrabold   break-words text-bannerText'>{props.email}</p>
