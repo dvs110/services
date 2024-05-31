@@ -163,6 +163,19 @@ router.post("/update-worker-byname", async (req, res) => {
 
             const workerflight = await Worker.findByIdAndUpdate(worker._id, { $push: { rating: { $each: ratingArray } } }, { new: true });
             console.log(workerflight);
+            var mailOptions = {
+                from: process.env.EMAIL,
+                to: worker.email,//email to be sended
+                subject: "Regarding Feedback",
+                html: `<div>req.body.feedback</div>`  // html body
+            };
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log('Message sent: %s', info.messageId);
+                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+            });
             res.status(200).json(100)  //successfully updated
         }
     } catch (err) {

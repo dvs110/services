@@ -5,12 +5,12 @@ import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 const Feedback = () => {
 
-    const [feedback, setFeedback] = useState('');
     const [rating, setRating] = useState(0);
     const [data, setData] = useState({
         firstname: "",
         lastname: "",
-        work: ""
+        work: "",
+        feedback: ""
     });
     const navigate = useNavigate();
     const onChangeHandle = (e) => {
@@ -78,8 +78,9 @@ const Feedback = () => {
                     <label htmlFor="feedback">Feedback:</label>
                     <textarea
                         id="feedback"
-                        value={feedback}
-                        onChange={(e) => setFeedback(e.target.value)}
+                        name='feedback'
+                        value={data.feedback}
+                        onChange={onChangeHandle}
                         required
                     ></textarea>
                 </div>
